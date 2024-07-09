@@ -1,0 +1,34 @@
+class Solution {
+public:
+    vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+        vector<vector<int>>result;
+        if(root==NULL){
+            return result;
+        }
+        queue<TreeNode*>q;
+        q.push(root);
+        bool l_to_r=true;
+        while(!q.empty()){
+            int n=q.size();
+            vector<int>ans(n);
+            for(int i=0;i<n;i++){
+                TreeNode *temp=q.front();
+                q.pop();
+                int index=l_to_r?i:n-i-1;
+                ans[index]=temp->val;
+
+                if(temp->left!=NULL)
+                q.push(temp->left);
+
+                if(temp->right!=NULL)
+                q.push(temp->right);
+            }
+            //out from for loop
+            //copy data of ans to result
+            result.push_back(ans);
+            //after each level we need to change the direction of traversal 
+            l_to_r=!(l_to_r);
+        }
+        return result;
+    }
+};
